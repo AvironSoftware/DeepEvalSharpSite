@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LLMTest.NET</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9fafb;
+      color: #111827;
+    }
+
+    header {
+      background-color: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #374151;
+      margin: 0 1rem;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: #1d4ed8;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 1.25rem;
+      color: #0f172a;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 1rem;
+      background-color: #ffffff;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: #4b5563;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .github-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .github-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #2563eb;
+    }
+
+    .features {
+      max-width: 1000px;
+      margin: 4rem auto;
+      padding: 0 1rem;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .feature-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .feature {
+      flex: 1 1 250px;
+      background-color: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .feature:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      color: #111827;
+    }
+
+    .feature p {
+      color: #6b7280;
+    }
+
+    .code-section {
+      background-color: #f3f4f6;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    .code-section h2 {
+      margin-bottom: 1rem;
+      font-size: 1.75rem;
+    }
+
+    pre {
+      background: #1f2937;
+      color: #d1d5db;
+      text-align: left;
+      max-width: 800px;
+      margin: 1rem auto;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: Consolas, monospace;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      margin-top: 5rem;
+      text-align: center;
+      padding: 2rem 1rem;
+      background-color: #f3f4f6;
+      color: #6b7280;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+      }
+      nav a {
+        margin: 0.5rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">LLMTest.NET</div>
+      <div class="nav-links">
+        <a href="#">Docs</a>
+        <a href="#">Examples</a>
+        <a href="#">Blog</a>
+        <a href="#">API</a>
+        <a href="#">GitHub</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Test Your LLMs Like a Pro</h1>
+      <p>
+        LLMTest.NET brings powerful, fun, and developer-friendly tools for evaluating large language models directly inside your .NET projects.
+      </p>
+
+      <div class="github-links">
+        <a href="#">MIT License</a>
+        <a href="#">v1.2.3</a>
+        <a href="#">NuGet Downloads: 42,000+</a>
+      </div>
+    </section>
+
+    <section class="features">
+      <h2>Why You'll Love It</h2>
+      <div class="feature-cards">
+        <div class="feature">
+          <h3>Supercharged Metrics</h3>
+          <p>Evaluate response quality with custom metrics or plug in your own logic — zero ceremony.</p>
+        </div>
+        <div class="feature">
+          <h3>Plug & Play</h3>
+          <p>Add it to your unit tests and CI pipelines like magic. No ML experience needed.</p>
+        </div>
+        <div class="feature">
+          <h3>Friendly for .NET Devs</h3>
+          <p>Written in C# with love. Deep integration with xUnit, NUnit, and MSTest.</p>
+        </div>
+        <div class="feature">
+          <h3>Explainable Results</h3>
+          <p>Get visual feedback on failures, score breakdowns, and model comparisons.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="code-section">
+      <h2>Sample C# Code</h2>
+      <pre><code>using LLMTest;
+
+public class MyTest
+{
+    [Fact]
+    public void Should_Answer_Correctly()
+    {
+        var result = LLM.Evaluate("What is 2 + 2?", "4");
+        Assert.True(result.IsPass);
+    }
+}</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 LLMTest.NET — AI evaluation tools for the .NET generation.
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    $(function () {
+      $('a[href="#"]').click(function (e) {
+        e.preventDefault();
+        alert("This is a placeholder link.");
+      });
+    });
+  </script>
+</body>
+</html>
