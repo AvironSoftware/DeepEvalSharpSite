@@ -41,7 +41,7 @@ export default function Home() {
                   d="M20 10V4a2 2 0 0 0-2-2h-6l-8 8 8 8h6a2 2 0 0 0 2-2v-6z"
                 />
               </svg>
-              v1.2.3
+              v0.1.1-alpha
             </a>
           </div>
         </section>
