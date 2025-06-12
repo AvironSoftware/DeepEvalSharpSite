@@ -1,41 +1,58 @@
-# Website
+# DeepEvalSharpSite Documentation
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+This repository hosts the DeepEvalSharpSite documentation website, built with [Docusaurus](https://docusaurus.io/) and published via GitHub Pages.
 
-## Installation
+🔗 **Live site:** https://avironsoftware.github.io/DeepEvalSharpSite/
 
-```bash
-yarn
-```
+---
 
-## Local Development
+## Prerequisites
 
-```bash
-yarn start
-```
+- [Node.js](https://nodejs.org/) v16 or later
+- npm (bundled with Node.js) or [Yarn](https://yarnpkg.com/)
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+---
 
-## Build
+## Build Locally
 
-```bash
-yarn build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-## Deployment
-
-Using SSH:
+Generate the static site into the `build/` folder:
 
 ```bash
-USE_SSH=true yarn deploy
+npm run build
 ```
 
-Not using SSH:
+---
+
+## Publish to GitHub Pages
+
+Deploy your changes with a single command:
 
 ```bash
-GIT_USER=<Your GitHub username> yarn deploy
+npm run deploy
 ```
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+What happens under the hood:
+
+1. Runs `npm run build` to produce the `build/` output.
+2. Commits the contents of `build/` into `gh-pages` branch.
+3. Pushes `gh-pages` to GitHub, from which GitHub Pages serves your site.
+
+---
+
+## Adding New Metric Documentation
+
+To document an additional LLM metric, create a Markdown file in the **root** [`docs/` folder](https://github.com/AvironSoftware/DeepEvalSharpSite/tree/main/docs):
+
+1. Add `docs/YourMetric.md`
+2. Include front-matter at the top:
+
+   ```markdown
+   ---
+   id: YourMetricId
+   title: Your Metric Name
+   ---
+
+   A brief description of what this metric measures and how it’s used.
+   ```
+
+Docusaurus will automatically add it to the sidebar and generate a page at `/docs/YourMetric`.
