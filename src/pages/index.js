@@ -1,60 +1,116 @@
+// src/pages/index.js
 import React from 'react';
 import Layout from '@theme/Layout';
 import styles from './index.module.css';
 
 export default function Home() {
   return (
-    <Layout
-      title="LLMTest.NET"
-      description="Powerful, developer-friendly tools for evaluating LLMs in .NET">
+    <Layout>
+
       <main className={styles.main}>
-        <header className={styles.hero}>
+        <section className={styles.hero}>
           <h1 className={styles.title}>Test Your LLMs Like a Pro</h1>
           <p className={styles.subtitle}>
-            LLMTest.NET brings powerful, fun, and developer-friendly tools for evaluating large language models directly inside your .NET projects.
+            DeepEvalSharp brings powerful and developer-friendly tools for evaluating
+            large language models directly inside your .NET projects.
           </p>
-          <div className={styles.githubLinks}>
-            <a href="#">MIT License</a>
-            <a href="#">v1.2.3</a>
-            <a href="#">NuGet Downloads: 42,000+</a>
-          </div>
-        </header>
 
-        <section className={styles.features}>
-          <h2>Why You'll Love It</h2>
-          <div className={styles.featureGrid}>
-            <div className={styles.feature}>
-              <h3>Supercharged Metrics</h3>
-              <p>Evaluate response quality with custom metrics or plug in your own logic — zero ceremony.</p>
-            </div>
-            <div className={styles.feature}>
-              <h3>Plug & Play</h3>
-              <p>Add it to your unit tests and CI pipelines like magic. No ML experience needed.</p>
-            </div>
-            <div className={styles.feature}>
-              <h3>Friendly for .NET Devs</h3>
-              <p>Written in C# with love. Deep integration with xUnit, NUnit, and MSTest.</p>
-            </div>
-            <div className={styles.feature}>
-              <h3>Explainable Results</h3>
-              <p>Get visual feedback on failures, score breakdowns, and model comparisons.</p>
-            </div>
+          <div className={styles.punchouts}>
+            <a href="#">
+              <svg
+                className={styles.icon}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"
+                />
+              </svg>
+              MIT License
+            </a>
+            <a href="#">
+              <svg
+                className={styles.icon}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d="M20 10V4a2 2 0 0 0-2-2h-6l-8 8 8 8h6a2 2 0 0 0 2-2v-6z"
+                />
+              </svg>
+              v1.2.3
+            </a>
+            <a href="#">
+              <svg
+                className={styles.icon}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d="M12 5v8m0 0l3-3m-3 3l-3-3M5 20h14a2 2 0 0 0 2-2v-2a6 6 0 0 0-12 0v2a2 2 0 0 0 2 2z"
+                />
+              </svg>
+              42K Downloads
+            </a>
           </div>
         </section>
 
-        <section className={styles.codeSection}>
-          <h2>Sample C# Code</h2>
-          <pre><code>{`using LLMTest;
-
-public class MyTest
-{
-    [Fact]
-    public void Should_Answer_Correctly()
-    {
-        var result = LLM.Evaluate("What is 2 + 2?", "4");
-        Assert.True(result.IsPass);
-    }
-}`}</code></pre>
+        <section className={styles.features}>
+          <h2>Rapid Evaluations</h2>
+          <h3>With These Robust Metrics</h3>
+          <div className={styles.featureGrid}>
+            <div className={styles.feature}>
+              <h4>Answer Relevancy</h4>
+              <p>Optimized pipelines for lightning-quick LLM evaluations.</p>
+            </div>
+            <div className={styles.feature}>
+              <h4>Bias</h4>
+              <p>Plug into your existing tests with almost no setup.</p>
+            </div>
+            <div className={styles.feature}>
+              <h4>Contextual Precision</h4>
+              <p>Define your own success criteria in C# or use built-ins.</p>
+            </div>
+            <div className={styles.feature}>
+              <h4>Contextual Recall</h4>
+              <p>See pass/fail breakdowns and inline diffs in your CI logs.</p>
+            </div>
+            <div className={styles.feature}>
+              <h4>DAG</h4>
+              <p>Optimized pipelines for lightning-quick LLM evaluations.</p>
+            </div>
+            <div className={styles.feature}>
+              <h4>Faithfulness</h4>
+              <p>Plug into your existing tests with almost no setup.</p>
+            </div>
+            <div className={styles.feature}>
+              <h4>G-Eval</h4>
+              <p>Define your own success criteria in C# or use built-ins.</p>
+            </div>
+            <div className={styles.feature}>
+              <h4>Hallucination</h4>
+              <p>See pass/fail breakdowns and inline diffs in your CI logs.</p>
+            </div>
+            <div className={styles.feature}>
+              <h4>Prompt Alignment</h4>
+              <p>Optimized pipelines for lightning-quick LLM evaluations.</p>
+            </div>
+            <div className={styles.feature}>
+              <h4>Summarization</h4>
+              <p>Plug into your existing tests with almost no setup.</p>
+            </div>
+            <div className={styles.feature}>
+              <h4>Task Completion</h4>
+              <p>Define your own success criteria in C# or use built-ins.</p>
+            </div>
+            <div className={styles.feature}>
+              <h4>Tool Correctnesss</h4>
+              <p>See pass/fail breakdowns and inline diffs in your CI logs.</p>
+            </div>
+          </div>
         </section>
       </main>
     </Layout>
