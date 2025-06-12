@@ -118,6 +118,7 @@
   padding: 1.5rem;
     /* add a transparent border so it can transition without layout shift */
   border: 1px solid var(--ifm-toc-border-color);
+  color: inherit;
 
   /* include border-color in the hover transition */
   transition:

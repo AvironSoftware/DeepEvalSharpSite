@@ -2,6 +2,7 @@
 import React from 'react';
 import Layout from '@theme/Layout';
 import styles from './index.module.css';
+import Link from '@docusaurus/Link';  
 
 export default function Home() {
   return (
@@ -49,54 +50,54 @@ export default function Home() {
           <h2>Rapid Evaluations</h2>
           <h3>With These Robust Metrics</h3>
           <div className={styles.featureGrid}>
-            <div className={styles.feature}>
+            <Link to="docs/AnswerRelevancyMetric" className={styles.feature}>
               <h4>Answer Relevancy</h4>
-              <p>Optimized pipelines for lightning-quick LLM evaluations.</p>
-            </div>
-            <div className={styles.feature}>
+              <p>Measure how relevant the LLM’s response is to the user’s query, ensuring on-topic, directly useful answers. </p>
+            </Link>
+            <Link to="docs/AnswerRelevancyMetric" className={styles.feature}>
               <h4>Bias</h4>
-              <p>Plug into your existing tests with almost no setup.</p>
-            </div>
-            <div className={styles.feature}>
+              <p>Quantifies unwanted prejudice or skew in model outputs so you can detect and mitigate fairness issues.</p>
+            </Link>
+            <Link to="docs/ContextualPrecisionMetric" className={styles.feature}>
               <h4>Contextual Precision</h4>
-              <p>Define your own success criteria in C# or use built-ins.</p>
-            </div>
-            <div className={styles.feature}>
+              <p>Checks that the retrieved context contains only the most pertinent information for a given query.</p>
+            </Link>
+            <Link to="docs/ContextualRecallMetric" className={styles.feature}>
               <h4>Contextual Recall</h4>
-              <p>See pass/fail breakdowns and inline diffs in your CI logs.</p>
-            </div>
-            <div className={styles.feature}>
+              <p>Evaluates how comprehensively the retrieval context covers all necessary details to address a query.</p>
+            </Link>
+            <Link to="docs/DAGMetric" className={styles.feature}>
               <h4>DAG</h4>
-              <p>Optimized pipelines for lightning-quick LLM evaluations.</p>
-            </div>
-            <div className={styles.feature}>
+              <p>Uses a decision-tree to break evaluation into atomic checks for fine-grained reliability.</p>
+            </Link>
+            <Link to="docs/FaithfulnessMetric" className={styles.feature}>
               <h4>Faithfulness</h4>
-              <p>Plug into your existing tests with almost no setup.</p>
-            </div>
-            <div className={styles.feature}>
+              <p>Assesses whether outputs are factually supported by the source context, preventing unsupported or fabricated claims.</p>
+            </Link>
+            <Link to="docs/GEvalMetric" className={styles.feature}>
               <h4>G-Eval</h4>
-              <p>Define your own success criteria in C# or use built-ins.</p>
-            </div>
-            <div className={styles.feature}>
+              <p>A general-purpose evaluator that leverages chain-of-thought prompting to align LLM quality judgments with human preferences.</p>
+            </Link>
+            <Link to="docs/AnswerRelevancyMetric" className={styles.feature}>
               <h4>Hallucination</h4>
-              <p>See pass/fail breakdowns and inline diffs in your CI logs.</p>
-            </div>
-            <div className={styles.feature}>
+              <p>Detects when the model fabricates or “hallucinates” information not grounded in the provided context, guarding against false statements.</p>
+            </Link>
+            <Link to="docs/AnswerRelevancyMetric" className={styles.feature}>
               <h4>Prompt Alignment</h4>
-              <p>Optimized pipelines for lightning-quick LLM evaluations.</p>
-            </div>
-            <div className={styles.feature}>
+              <p>Measures how closely the model’s output follows the structure, style, or instructions specified in the prompt.</p>
+            </Link>
+            <Link to="docs/AnswerRelevancyMetric" className={styles.feature}>
               <h4>Summarization</h4>
-              <p>Plug into your existing tests with almost no setup.</p>
-            </div>
-            <div className={styles.feature}>
+              <p>Rates the conciseness, coherence, and completeness of generated summaries relative to the source text.</p>
+            </Link>
+            <Link to="docs/AnswerRelevancyMetric" className={styles.feature}>
               <h4>Task Completion</h4>
-              <p>Define your own success criteria in C# or use built-ins.</p>
-            </div>
-            <div className={styles.feature}>
+              <p>Determines whether the model successfully performs the requested task from end to end, verifying operational effectiveness.</p>
+            </Link>
+            <Link to="docs/AnswerRelevancyMetric" className={styles.feature}>
               <h4>Tool Correctnesss</h4>
-              <p>See pass/fail breakdowns and inline diffs in your CI logs.</p>
-            </div>
+              <p>Checks if the model correctly invokes and uses external functions or tools in agentic workflows, ensuring proper tool usage.</p>
+            </Link>
           </div>
         </section>
       </main>
