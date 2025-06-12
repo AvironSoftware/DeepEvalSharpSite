@@ -42,19 +42,6 @@ export default function Home() {
               </svg>
               v1.2.3
             </a>
-            <a href="#">
-              <svg
-                className={styles.icon}
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill="currentColor"
-                  d="M12 5v8m0 0l3-3m-3 3l-3-3M5 20h14a2 2 0 0 0 2-2v-2a6 6 0 0 0-12 0v2a2 2 0 0 0 2 2z"
-                />
-              </svg>
-              42K Downloads
-            </a>
           </div>
         </section>
 

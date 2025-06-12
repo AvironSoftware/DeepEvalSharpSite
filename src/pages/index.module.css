@@ -114,15 +114,22 @@
 
 .feature {
   background-color: var(--ifm-background-surface-color);
-  border: 1px solid var(--ifm-toc-border-color);
   border-radius: 8px;
   padding: 1.5rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* add a transparent border so it can transition without layout shift */
+  border: 1px solid var(--ifm-toc-border-color);
+
+  /* include border-color in the hover transition */
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .feature:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  border-color: #2563eb;
 }
 
 .codeSection {
