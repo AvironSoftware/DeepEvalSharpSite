@@ -1,0 +1,82 @@
+.main {
+  padding: 2rem 1rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--ifm-heading-color);
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: var(--ifm-color-gray-700);
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.githubLinks {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.githubLinks a {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.features {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.featureGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.feature {
+  flex: 1 1 250px;
+  background-color: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.codeSection {
+  background-color: var(--ifm-color-emphasis-100);
+  padding: 2rem 1rem;
+  margin-top: 4rem;
+}
+
+pre {
+  background: #1f2937;
+  color: #d1d5db;
+  text-align: left;
+  max-width: 800px;
+  margin: 1rem auto;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: Consolas, monospace;
+  font-size: 0.95rem;
+}
