@@ -1,0 +1,130 @@
+.terminal {
+  border-radius: 8px;
+  position: relative;
+  width: 600px;
+  max-width: 20vw;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+  background: var(--term-bg);
+  color: var(--term-text);
+}
+
+
+.terminalheader {
+  position: relative;
+  height: 40px;
+  background: var(--term-header);
+  display: flex;
+  align-items: center;
+}
+
+.trafficlightswrapper {
+  padding-left: 12px;
+  display: flex;
+  flex-shrink: 0;
+}
+
+.trafficlights {
+  display: flex;
+  gap: 8px;
+}
+
+.trafficlights span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.terminaltitlewrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close { background: #ff5f56; }
+.minimize { background: #ffbd2e; }
+.maximize { background: #27c93f; }
+
+.terminalbody {
+  padding: 20px;
+  font-size: 18px;
+  color: #f8f8f2;
+  min-height: 250px;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+
+.promptline {
+  display: flex;
+  align-items: center;
+}
+
+.promptsymbol {
+  color: var(--term-text);
+  margin-right: 10px;
+}
+
+code {
+  background: var(--term-bg);
+  color: var(--term-text);
+  border: none;
+}
+
+.terminaloverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* slightly grey out */
+  color: white;
+  font-weight: normal;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.terminal.copied .terminaloverlay {
+  opacity: 1;
+}
+
+.terminaltitle {
+  font-weight: bold;
+  font-size: 14px;
+  color: var(--term-text);
+}
+
+.terminaltooltip {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  color: var(--term-text);
+  background: transparent;
+  padding: 2px 8px;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1;
+}
+
+.terminal:hover .terminaltooltip {
+  opacity: 1;
+}
+
+.terminal.copied .terminaltooltip {
+  display: none;
+}
