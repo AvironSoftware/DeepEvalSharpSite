@@ -11,6 +11,12 @@
   color: var(--term-text);
 }
 
+@media (max-width: 768px) {
+  .terminal {
+    max-width: 100%;
+  }
+}
+
 
 .terminalheader {
   position: relative;
@@ -55,9 +61,9 @@
 
 .terminalbody {
   padding: 20px;
-  font-size: 18px;
+  font-size: 12px;
   color: #f8f8f2;
-  min-height: 250px;
+  min-height: 220px;
   display: flex;
   align-items: flex-start;
   position: relative;
@@ -77,6 +83,13 @@ code {
   background: var(--term-bg);
   color: var(--term-text);
   border: none;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 768px) and (max-width: 1520px) {
+  code {
+    font-size: 0.675rem;
+  }
 }
 
 .terminaloverlay {
@@ -110,7 +123,7 @@ code {
   bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 1.5rem;
+  font-size: 1rem;
   color: var(--term-text);
   background: transparent;
   padding: 2px 8px;

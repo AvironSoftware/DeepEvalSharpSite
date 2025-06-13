@@ -6,7 +6,7 @@ export default function Terminal() {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    const command = 'dotnet add package MassTransit';
+    const command = 'dotnet add package DeepEvalSharp';
     navigator.clipboard.writeText(command).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);

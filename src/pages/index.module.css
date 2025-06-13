@@ -29,6 +29,19 @@
 
 .main {
   padding: 2rem 1rem;
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.content {
+  flex: 0 0 70%;
+  padding: 1rem;
+}
+
+.terminalSection {
+  flex: 0 0 30%;
+  padding: 1rem;
 }
 
 .hero {
@@ -109,6 +122,15 @@
 @media (max-width: 768px) {
   .featureGrid {
     grid-template-columns: 1fr;
+  }
+
+  .main {
+      flex-direction: column;
+  }
+  .content,
+  .terminalSection {
+    flex: 0 0 auto;
+    width: 100%;
   }
 }
 

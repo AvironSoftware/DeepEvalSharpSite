@@ -9,15 +9,14 @@ export default function Home() {
   return (
     <Layout>
 
-      <main className={styles.main}>
+      <main className={`${styles.main} ${styles.layoutContainer}`}>
+        <div className={styles.content}>
         <section className={styles.hero}>
           <h1 className={styles.title}>Test Your LLMs Like a Pro</h1>
           <p className={styles.subtitle}>
             DeepEvalSharp brings powerful and developer-friendly tools for evaluating
             large language models directly inside your .NET projects.
           </p>
-
-          <Terminal/>
 
           <div className={styles.punchouts}>
             <a href="#">
@@ -103,6 +102,10 @@ export default function Home() {
             </Link>
           </div>
         </section>
+        </div>
+        <div className={styles.terminalSection}>
+            <Terminal/>
+        </div>
       </main>
     </Layout>
   );

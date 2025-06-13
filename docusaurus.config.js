@@ -74,7 +74,7 @@ const config = {
 
           },
           {
-            href: 'https://github.com/AvironSoftware',
+            href: 'https://github.com/AvironSoftware/DeepEvalSharp',
             label: 'GitHub',
             position: 'right',
           },
