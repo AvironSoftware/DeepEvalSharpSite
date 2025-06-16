@@ -17,7 +17,7 @@ The Custom Metric feature allows you to define your own evaluation logic, either
 
 Custom metrics follow the standard metric interface and derive from the base `Metric<TConfiguration>` class. You can implement your scoring logic using existing DeepEvalSharp metrics or your own custom routines.
 
-Implementing MetricConfiguration is optional, but if you would like more visibility to additional parameters, this is suggested.
+Implementing MetricConfiguration is optional, but if you would like visibility to additional parameters, this is suggested.
 
 ### Example 1: Composite Custom Metric (Faithfulness + Answer Relevancy)
 
@@ -84,11 +84,10 @@ public class ExactMatchMetric : Metric<MetricConfiguration>
 
 ## Configuration Options
 
-| Parameter        | Description                                                                                        |
-| ---------------- | -------------------------------------------------------------------------------------------------- |
-| `threshold`      | The minimum score required to pass the test (e.g., 0.6).                                           |
-| `include_reason` | If `true`, includes a justification for the result.                                                |
-| `strict_mode`    | If `true`, enforces binary scoring—1 for perfect match, 0 otherwise. Applies to composite metrics. |
+| Parameter     | Description                                                                                        |
+| ------------- | -------------------------------------------------------------------------------------------------- |
+| `threshold`   | The minimum score required to pass the test (e.g., 0.6).                                           |
+| `strict_mode` | If `true`, enforces binary scoring—1 for perfect match, 0 otherwise. Applies to composite metrics. |
 
 ## Notes
 
