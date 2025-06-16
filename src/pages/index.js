@@ -100,6 +100,10 @@ export default function Home() {
               <h4>Tool Correctness</h4>
               <p>Checks if the model correctly invokes and uses external functions or tools in agentic workflows, ensuring proper tool usage.</p>
             </Link>
+              <Link to="docs/metrics/CustomMetric" className={styles.feature}>
+              <h4>Custom Metrics</h4>
+              <p>Tailor evaluation logic for specialized or composite LLM use cases.</p>
+            </Link>
           </div>
         </section>
         </div>
