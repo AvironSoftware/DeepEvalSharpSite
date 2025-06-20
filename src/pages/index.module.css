@@ -93,13 +93,13 @@
 .features h2 {
   font-size: 2rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .features h4 {
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .features h3 {
@@ -116,6 +116,7 @@
   height: 2rem;
   border-radius: 0.25rem; 
   padding: .2em;
+  margin-bottom: 1rem;
 }
 
 .purpleIcon {
@@ -167,6 +168,8 @@
   .rightSide {
     flex: 0 0 auto;
     width: 100%;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .subtitle {
@@ -199,6 +202,7 @@
     transform 0.2s ease,
     box-shadow 0.2s ease,
     border-color 0.2s ease;
+  line-height: 1.75;
 }
 
 .feature:hover {
