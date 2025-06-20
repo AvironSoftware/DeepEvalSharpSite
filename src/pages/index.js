@@ -3,113 +3,84 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import styles from './index.module.css';
 import Link from '@docusaurus/Link';  
-import Terminal from '../components/terminal';
+import Terminal from '../components/terminal/terminal';
+import Version from '../components/version/version';
+import TimeIcon from '@site/static/img/time-icon.svg';
+import ComputerIcon from '@site/static/img/computer-icon.svg';
+import QuestionIcon from '@site/static/img/question-icon.svg';
+import WrenchIcon from '@site/static/img/wrench-icon.svg';
+import CodeIcon from '@site/static/img/code-icon.svg';
+
 
 export default function Home() {
   return (
     <Layout>
 
-      <main className={`${styles.main} ${styles.layoutContainer}`}>
-        <div className={styles.content}>
-        <section className={styles.hero}>
-          <h1 className={styles.title}>Test Your LLMs Like a Pro</h1>
-          <p className={styles.subtitle}>
-            DeepEvalSharp brings powerful and developer-friendly tools for evaluating
-            large language models directly inside your .NET projects.
-          </p>
-
-          <div className={styles.punchouts}>
-            <a href="#">
-              <svg
-                className={styles.icon}
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill="currentColor"
-                  d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"
-                />
-              </svg>
-              MIT License
-            </a>
-            <a href="#">
-              <svg
-                className={styles.icon}
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill="currentColor"
-                  d="M20 10V4a2 2 0 0 0-2-2h-6l-8 8 8 8h6a2 2 0 0 0 2-2v-6z"
-                />
-              </svg>
-              v0.1.1-alpha
-            </a>
+      <main className={styles.main}>
+        <div className={styles.top}>
+          <div className={styles.leftSide}>
+            <section className={styles.hero}>
+              <h1 className={styles.title}>Test Your LLMs Like a Pro</h1>
+              <p className={styles.subtitle}>
+                DeepEvalSharp brings powerful and developer-friendly tools for evaluating
+                large language models directly inside your .NET projects.
+              </p>
+              <div className={styles.buttons}>
+                <Link
+                  className="button button--primary button--lg"
+                  to="/docs/quick-start">
+                  Get Started
+                </Link>
+              </div>
+            </section>
           </div>
-        </section>
-
+          <div className={styles.rightSide}>
+            <div className={styles.rightSideItem}>
+              <Terminal/>
+            </div>
+            <div className={styles.rightSideItem}>
+              <Version/>
+            </div>  
+          </div>
+        </div>
         <section className={styles.features}>
-          <h2>Rapid Evaluations</h2>
-          <h3>With These Robust Metrics</h3>
+          <h2>Features</h2>
           <div className={styles.featureGrid}>
-            <Link to="docs/metrics/AnswerRelevancyMetric" className={styles.feature}>
-              <h4>Answer Relevancy</h4>
-              <p>Measure how relevant the LLM’s response is to the user’s query, ensuring on-topic, directly useful answers. </p>
-            </Link>
-            <Link to="docs/metrics/BiasMetric" className={styles.feature}>
-              <h4>Bias</h4>
-              <p>Quantifies unwanted prejudice or skew in model outputs so you can detect and mitigate fairness issues.</p>
-            </Link>
-            <Link to="docs/metrics/ContextualPrecisionMetric" className={styles.feature}>
-              <h4>Contextual Precision</h4>
-              <p>Checks that the retrieved context contains only the most pertinent information for a given query.</p>
-            </Link>
-            <Link to="docs/metrics/ContextualRecallMetric" className={styles.feature}>
-              <h4>Contextual Recall</h4>
-              <p>Evaluates how comprehensively the retrieval context covers all necessary details to address a query.</p>
-            </Link>
-            <Link to="docs/metrics/DAGMetric" className={styles.feature}>
-              <h4>DAG</h4>
-              <p>Uses a decision-tree to break evaluation into atomic checks for fine-grained reliability.</p>
-            </Link>
-            <Link to="docs/metrics/FaithfulnessMetric" className={styles.feature}>
-              <h4>Faithfulness</h4>
-              <p>Assesses whether outputs are factually supported by the source context, preventing unsupported or fabricated claims.</p>
-            </Link>
-            <Link to="docs/metrics/GEvalMetric" className={styles.feature}>
-              <h4>G-Eval</h4>
-              <p>A general-purpose evaluator that leverages chain-of-thought prompting to align LLM quality judgments with human preferences.</p>
-            </Link>
-            <Link to="docs/metrics/HallucinationMetric" className={styles.feature}>
-              <h4>Hallucination</h4>
-              <p>Detects when the model fabricates or “hallucinates” information not grounded in the provided context, guarding against false statements.</p>
-            </Link>
-            <Link to="docs/metrics/PromptAlignmentMetric" className={styles.feature}>
-              <h4>Prompt Alignment</h4>
-              <p>Measures how closely the model’s output follows the structure, style, or instructions specified in the prompt.</p>
-            </Link>
-            <Link to="docs/metrics/SummarizationMetric" className={styles.feature}>
-              <h4>Summarization</h4>
-              <p>Rates the conciseness, coherence, and completeness of generated summaries relative to the source text.</p>
-            </Link>
-            <Link to="docs/metrics/TaskCompletionMetric" className={styles.feature}>
-              <h4>Task Completion</h4>
-              <p>Determines whether the model successfully performs the requested task from end to end, verifying operational effectiveness.</p>
-            </Link>
-            <Link to="docs/metrics/ToolCorrectnessMetric" className={styles.feature}>
-              <h4>Tool Correctness</h4>
-              <p>Checks if the model correctly invokes and uses external functions or tools in agentic workflows, ensuring proper tool usage.</p>
-            </Link>
-              <Link to="docs/metrics/CustomMetric" className={styles.feature}>
-              <h4>Custom Metrics</h4>
-              <p>Tailor evaluation logic for specialized or composite LLM use cases.</p>
-            </Link>
+            <div className={styles.feature}>
+              <div className={styles.featureTitle}>      
+                <CodeIcon aria-hidden="true" className={`${styles.svgIcon} ${styles.purpleIcon}`} />
+                <h4>Native .NET Evaluator</h4></div>
+              <p>DeepEvalSharp brings LLM metrics directly to .NET. Write eval tests in C# with a familiar API.</p>
+            </div>
+            <div className={styles.feature}>
+              <div className={styles.featureTitle}>
+                <ComputerIcon aria-hidden="true" className={`${styles.svgIcon} ${styles.yellowIcon}`} />
+                <h4>Open LLM Compatibility</h4>
+              </div>
+              <p>Work with any LLM in .NET. Compare outputs across models seamlessly within your .NET workflows.</p>
+            </div>
+            <div className={styles.feature}>
+              <div className={styles.featureTitle}>
+                <QuestionIcon aria-hidden="true" className={`${styles.svgIcon} ${styles.greenIcon}`} />
+                <h4>Real-Time Insights</h4>
+                </div>
+              <p>Inspect outputs, logs, and traces in a beautiful interactive UI that runs locally alongside your .NET apps.</p>
+            </div>
+            <div className={styles.feature}>
+              <div className={styles.featureTitle}>
+                <TimeIcon aria-hidden="true" className={`${styles.svgIcon} ${styles.blueIcon}`} />
+                <h4>Quickstart in Minutes</h4>
+                </div>
+              <p>Install via NuGet and start evaluating LLM outputs with a few C# lines. Built-in defaults get you up and running instantly.</p>
+            </div>
+            <div className={styles.feature}>
+              <div className={styles.featureTitle}>
+                <WrenchIcon aria-hidden="true" className={`${styles.svgIcon} ${styles.redIcon}`} />
+                <h4>Fully Extensible API</h4></div>
+              <p>Customize built-in metrics, define new evaluation criteria, or plug in your own scoring logic—all through a clean, extensible C# API.</p>
+            </div>
           </div>
         </section>
-        </div>
-        <div className={styles.terminalSection}>
-            <Terminal/>
-        </div>
       </main>
     </Layout>
   );
