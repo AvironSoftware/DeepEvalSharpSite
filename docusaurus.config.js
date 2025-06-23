@@ -88,7 +88,8 @@ const config = {
         additionalLanguages: ['csharp']
       },
       metadata: [
-        {name: 'keywords', content: 'LLM Evaluation, .NET, DeepEvalSharp, LLM Testing, AI Evaluation, Python alternative, Custom Metric', }
+        {name: 'keywords', content: 'LLM Evaluation, .NET, DeepEvalSharp, LLM Testing, AI Evaluation, Python alternative, Custom Metric' },
+        {name: 'description', content: 'DeepEvalSharp is an LLM evaluation framework for .NET developers, providing reliable AI evaluation metrics without needing Python.'}
       ],
     }),
 };
