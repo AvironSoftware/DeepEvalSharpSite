@@ -1,6 +1,6 @@
 # Task Completion Metric
 
-The Task Completion Metric employs an LLM as a judge to measure how well an agent carries out the task specified in its `input`, taking into account both the `tools_called` and the agent’s `actual_output`. The Task Completion Metric is an agentic, referenceless LLM-as-a-judge metric that measures how well an LLM agent accomplishes a user-specified task.
+The Task Completion Metric employs an LLM as a judge to measure how well an agent carries out the task specified in its `InitialInput`, taking into account both the `ToolsCalled` and the agent’s `ActualOutput`. The Task Completion Metric is an agentic, referenceless LLM-as-a-judge metric that measures how well an LLM agent accomplishes a user-specified task.
 
 #### When you should use Task Completion Metric
 
@@ -16,25 +16,66 @@ The Task Completion Metric employs an LLM as a judge to measure how well an agen
 
 ## How to use
 
-The Task Completion Metric requires `input`, `actual_output`, and `tools_called`.
+The Task Completion Metric requires `InitialInput`, `ActualOutput`, and `ToolsCalled` to function. You can instantiate an Task Completion metric with optional parameters to customize its behavior.
 
-Instantiate a Task Completion Metric with:
+Add Task Completion Metric to your evaluator:
 
-| Constructor                     | Description                 |
-| ------------------------------- | --------------------------- |
-| `TaskCompletionMetric.Metric()` | Initializes a new instance. |
+| Method                                                                                          | Description                                                      |
+| ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `AddTaskCompletion(bool includeReason = true, bool strictMode = false, double threshold = 0.5)` | Creates the Task Completion metric and adds it to the evaluator. |
+| `AddTaskCompletion(TaskCompletionMetricConfiguration config)`                                   | Creates the Task Completion metric and adds it to the evaluator. |
 
-Here’s an example of how to use Task Completion Metric:
+Here's an example of how to use Task Completion metric:
 
 ```csharp
-var metric = TaskCompletionMetric.Metric();
-var result = metric.Evaluate(modelOutput);
+// 1) Prepare your data
+var cases = new[]
+{
+    new TType
+    {
+        UserInput    = "I need to reset my password.",
+        LLMOutput   = "I’ve sent a password reset link to your registered email.",
+        ToolsCalled = [
+            new ToolCall
+            {
+                Name = "Reset Password",
+                Description = "Resets a user's password and sends a reset link.",
+                InputParameters = new Dictionary<string, object?> { { "user_request", "reset password" } },
+                Output = "Password reset link sent."
+            }
+        ]
+    }
+};
+
+// 2) Create evaluator, mapping your case → MetricEvaluationContext
+var evaluator = Evaluator.FromData(
+    ChatClient.GetInstance(),
+    cases,
+    c => new MetricEvaluationContext
+    {
+        InitialInput    = c.UserInput,
+        ActualOutput    = c.LLMOutput,
+        ToolsCalled     = c.ToolsCalled
+    }
+);
+
+// 3) Add metric and run
+evaluator.AddTaskCompletion(includeReason: true);
+var result = await evaluator.RunAsync();
 ```
 
-### Optional Parameters
+### Required Data Fields
 
-| Parameter        | Description                                                                                                         |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `threshold`      | A float representing the minimum passing score, defaulting to 0.5.                                                  |
-| `include_reason` | A boolean that, when set to `True`, provides a reason for the metric score. Default is `True`.                      |
-| `strict_mode`    | Enforces a binary metric score—1 for perfect relevance, 0 otherwise—setting the threshold to 1. Default is `False`. |
+| Parameter      | Description                                                                                             |
+| -------------- | ------------------------------------------------------------------------------------------------------- |
+| `InitialInput` | A string That represents the initial input is the user interaction with the LLM.                        |
+| `ActualOutput` | A string That represents the actual output of the test case from the LLM.                               |
+| `ToolsCalled`  | A list of `DeepEvalSharp.Models.ToolCall`'s which are tools your LLM actually invoked during execution. |
+
+### Optional Configuration Parameters
+
+| Parameter       | Description                                                                                                         |
+| --------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `Threshold`     | A float representing the minimum passing score, defaulting to 0.5.                                                  |
+| `IncludeReason` | A boolean that, when set to `True`, provides a reason for the metric score. Default is `True`.                      |
+| `StrictMode`    | Enforces a binary metric score—1 for perfect relevance, 0 otherwise—setting the threshold to 1. Default is `False`. |

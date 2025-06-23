@@ -1,6 +1,6 @@
 # Contextual Recall Metric
 
-The Contextual Recall Metric evaluates the effectiveness of your Retrieval-Augmented Generation (RAG) pipeline's retriever by assessing how well the retrieved context (`retrieval_context`) aligns with the expected output (`expected_output`). This metric ensures that the retriever captures and provides all relevant information necessary for generating accurate responses. Additionally, it offers explanations for its scores, making it a self-explaining LLM-Eval tool.
+The Contextual Recall Metric evaluates the effectiveness of your Retrieval-Augmented Generation (RAG) pipeline's retriever by assessing how well the retrieved context (`RetrievalContext`) aligns with the expected output (`ExpectedOutput`). This metric ensures that the retriever captures and provides all relevant information necessary for generating accurate responses. Additionally, it offers explanations for its scores, making it a self-explaining LLM-Eval tool.
 
 #### When you should use Contextual Recall Metric
 
@@ -16,33 +16,62 @@ The Contextual Recall Metric evaluates the effectiveness of your Retrieval-Augme
 
 ## How to use
 
-The Contextual Recall Metric requires `input`, `actual_output`, `expected_output`, and `retrieval_context` to function effectively. You can instantiate a Contextual Recall Metric with optional parameters to customize its behavior.
+The Contextual Recall Metric requires `ExpectedOutput` and `RetrievalContext` to function. You can instantiate an Contextual Recall metric with optional parameters to customize its behavior.
 
-Instantiate a Contextual Recall Metric by using one of these static constructors:
+Add Contextual Recall Metric to your evaluator:
 
-| Constructor                 | Description                |
-| --------------------------- | -------------------------- |
-| `ContextualRecall.Metric()` | Initializes a new instance |
+| Method                                                                 | Description                                                        |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `AddContextualRecall(bool strictMode = false, double threshold = 0.5)` | Creates the Contextual Recall metric and adds it to the evaluator. |
+| `AddContextualRecall(ContextualRecallMetricConfiguration config)`      | Creates the Contextual Recall metric and adds it to the evaluator. |
 
-Here's an example of how to use Contextual Recall:
-
-```csharp
-var metric = ContextualRecall.Metric();
-var result = metric.Evaluate(modelOutput);
-```
-
-### Optional Parameters
-
-| Parameter     | Description                                                                                                       |
-| ------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `threshold`   | A float representing the minimum passing threshold, defaulting to 0.5.                                            |
-| `strict_mode` | Enforces a binary metric score—1 for perfect recall, 0 otherwise—and sets the threshold to 1. Default is `False`. |
-
-## Samples
-
-We've given you a sample to work with that evaluates bla bla bla. Here's how you can run these samples:
+Here's an example of how to use Contextual Recall metric:
 
 ```csharp
-var metric = ContextualRecall.Metric();
-var result = metric.Evaluate(modelOutput);
+// 1) Prepare your data
+var cases = new[]
+{
+    new TType
+    {
+        UserInput    = "Can you explain why plants need sunlight, referring to our discussion on photosynthesis last week?",
+        LLMOutput   = "Plants need sunlight because it helps them grow more flowers.",
+        GroundTruth   = "As discussed in our previous lesson on photosynthesis, plants require sunlight to convert carbon dioxide and water into glucose and oxygen, which is vital for their growth and energy production.",
+        RetrievalContext =
+        [
+            "Previous lesson included a detailed explanation of photosynthesis and the role of sunlight in the process.",
+            "Irrelevant context: Some sources incorrectly claim that sunlight only influences the blooming of flowers."
+        ]
+    }
+};
+
+// 2) Create evaluator, mapping your case → MetricEvaluationContext
+var evaluator = Evaluator.FromData(
+    ChatClient.GetInstance(),
+    cases,
+    c => new MetricEvaluationContext
+    {
+        InitialInput    = "",
+        ActualOutput    = "",
+        ExpectedOutput = c.GroundTruth,
+        RetrievalContext = c.RetrievalContext
+    }
+);
+
+// 3) Add metric and run
+evaluator.AddContextualRecall(includeReason: true);
+var result = await evaluator.RunAsync();
 ```
+
+### Required Data Fields
+
+| Parameter          | Description                                                                                                                                             |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ExpectedOutput`   | The expected output of the test case.                                                                                                                   |
+| `RetrievalContext` | A list of background information strings that your app actually found when answering. Use this to compare what was retrieved against the ideal Context. |
+
+### Optional Configuration Parameters
+
+| Parameter    | Description                                                                                                         |
+| ------------ | ------------------------------------------------------------------------------------------------------------------- |
+| `Threshold`  | A float representing the minimum passing score, defaulting to 0.5.                                                  |
+| `StrictMode` | Enforces a binary metric score—1 for perfect relevance, 0 otherwise—setting the threshold to 1. Default is `False`. |

@@ -18,37 +18,63 @@ G-Eval came from this paper - and its usage is well described here in the DeepEv
 
 ## How to use
 
-GEval requires either criteria or evaluation steps.
+The GEval Metric requires `InitialInput` and `ActualOutput` to function. You can instantiate an GEval metric with optional parameters to customize its behavior.
 
-- Criteria is useful when doing quick evaluations of LLM-generated outputs for relevance and factual accuracy, ensuring they meet broad quality standards without requiring step-by-step reasoning.
-- Evaluation steps is useful when you need to systematically verify complex outputs, such as fact-checking a legal argument by breaking down claims and cross-referencing reliable sources.
+Add GEval Metric to your evaluator:
 
-Instantiate a GEval metric by using one of these static constructors:
+| Method                                                                                           | Description                                                                                                                                                                                                  |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `AddGEval(string criteria, bool strictMode = false, double threshold = 0.5)`                     | Creates the GEval metric and adds it to the evaluator. The criteria that you specify will be given to an LLM and turned into a set of evaluation steps that the LLM will use to evaluate the model's output. |
+| `AddGEval(IEnumerable<string> evaluationSteps, bool strictMode = false, double threshold = 0.5)` | Creates the GEval metric and adds it to the evaluator. The evaluation steps are steps that the LLM will use to evaluate the model's output.                                                                  |
+| `AddGEval(GEvalMetricConfiguration config)`                                                      | Creates the GEval metric and adds it to the evaluator.                                                                                                                                                       |
 
-| Constructor                                              | Description                                                                                                                                               |
-| -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `GEval.ForCriteria(string criteria)`                     | Create a GEval metric for a specific criteria. NOTE: this makes an additional call to the LLM to generate evaluation steps based on the initial criteria. |
-| `GEval.ForEvaluationSteps(List<string> evaluationSteps)` | Create a GEval metric with a list of evaluation steps.                                                                                                    |
-
-Here's an example of how to use GEval:
+Here's an example of how to use GEval metric:
 
 ```csharp
-var metric = GEval.ForCriteria("bla bla bla");
-var result = metric.Evaluate(modelOutput);
+// 1) Prepare your data
+var cases = new[]
+{
+    new TType
+    {
+        UserInput    = "The United Nations has warned that the global economy is facing severe challenges, with many countries experiencing deep recessions due to the ongoing pandemic. In a new report, the UN highlights the increasing unemployment rates, widespread poverty, and disruptions to supply chains. While some countries are beginning to show signs of recovery, the overall situation remains uncertain. Governments are urged to prioritize fiscal support and sustainable development policies to avoid long-term economic stagnation.",
+        LLMOutput   = "The United Nations has issued a warning that the global economy is facing significant challenges, with numerous countries experiencing some very bad things. In a newly released report, the UN emphasizes the rising unemployment rates, increasing levels of poverty, and major disruptions to supply chains that have affected economies worldwide. While certain countries have started to show early signs of recovery, the overall economic outlook remains highly uncertain. The report urges governments to take proactive measures, prioritizing fiscal support and implementing sustainable development policies to prevent long-term economic stagnation and ensure a more stable future.",
+        GroundTruth = "The United Nations has warned that the global economy is facing challenges due to the pandemic, with many things that make it difficult for these nations. While some nations are recovering, the global outlook remains uncertain, urging governments to prioritize fiscal support and sustainable development."
+    }
+};
+
+// 2) Create evaluator, mapping your case → MetricEvaluationContext
+var evaluator = Evaluator.FromData(
+    ChatClient.GetInstance(),
+    cases,
+    c => new MetricEvaluationContext
+    {
+        InitialInput    = c.UserInput,
+        ActualOutput    = c.LLMOutput
+    }
+);
+
+// 3) Add metric and run
+evaluator.AddGEval(criteria: "Is the summary shorter than the original article without omitting key details?", includeReason: true);
+var result = await evaluator.RunAsync();
 ```
 
-[[The optional parameters are: (these are obv incorrect, just an example)]]
+### Required Data Fields
 
-| Parameter    | Description                                                                                                                                      |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `threshold`  | A float representing the minimum passing score, defaulting to 0.5.                                                                               |
-| `StrictMode` | A boolean that, when set to True, enforces a binary metric score—1 for perfection, 0 otherwise—and sets the threshold to 1. The default is False |
+| Parameter      | Description                                                                      |
+| -------------- | -------------------------------------------------------------------------------- |
+| `InitialInput` | A string That represents the initial input is the user interaction with the LLM. |
+| `ActualOutput` | A string That represents the actual output of the test case from the LLM.        |
 
-## Samples
+### Required Configuration Parameters (Only one is required to be specified)
 
-We've given you a sample to work with that evaluates bla bla bla. Here's how you can run these samples:
+| Parameter         | Description                                                                                                                                                                                                                |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Criteria`        | A string criteria that you specify will be given to an LLM and turned into a set of evaluation steps that the LLM will use to evaluate the model's output. If EvaluationSteps are provided, this property will be ignored. |
+| `EvaluationSteps` | List of strings that represent each step the LLM should use to evaluate                                                                                                                                                    |
 
-```csharp
-var metric = GEval.ForCriteria("bla bla bla");
-var result = metric.Evaluate(modelOutput);
-```
+### Optional Configuration Parameters
+
+| Parameter    | Description                                                                                                         |
+| ------------ | ------------------------------------------------------------------------------------------------------------------- |
+| `Threshold`  | A float representing the minimum passing score, defaulting to 0.5.                                                  |
+| `StrictMode` | Enforces a binary metric score—1 for perfect relevance, 0 otherwise—setting the threshold to 1. Default is `False`. |

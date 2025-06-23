@@ -15,7 +15,7 @@ The Custom Metric feature allows you to define your own evaluation logic, either
 
 ## How to use
 
-Custom metrics follow the standard metric interface and derive from the base `Metric<TConfiguration>` class. You can implement your scoring logic using existing DeepEvalSharp metrics or your own custom routines.
+Custom metrics follow the standard metric interface and derive from the base `DeepEvalSharp.Scoring.Metric<TConfiguration>` class. You can implement your scoring logic using existing DeepEvalSharp metrics or your own custom routines.
 
 Implementing MetricConfiguration is optional, but if you would like visibility to additional parameters, this is suggested.
 
@@ -28,18 +28,18 @@ public class FaithfulRelevancyMetric : Metric<FaithfulRelevancyConfiguration>
 {
     public FaithfulRelevancyMetric(FaithfulRelevancyConfiguration configuration) : base(configuration) { }
 
-    public override async Task<MetricScore> ScoreAsync(MetricEvaluationContext context)
+    public override async Task<MetricScore> ScoreAsync(EvaluatorTestData testData)
     {
-        var relevancy = Metrics.Relevancy();
-        var faithfulness = Metrics.Faithfulness();
+        var relevancy = new AnswerRelevancyMetric(_chatClient, new AnswerRelevancyMetricConfiguration());
+        var faithfulness = new FaithfulnessMetric(_chatClient, new FaithfulnessMetricConfiguration());
 
-        var relevancyScore = await relevancy.ScoreAsync(context);
-        var faithfulnessScore = await faithfulness.ScoreAsync(context);
+        var relevancyScore = await relevancy.ScoreAsync(testData);
+        var faithfulnessScore = await faithfulness.ScoreAsync(testData);
 
-        return SetScoreReasonSuccess(context, relevancyScore, faithfulnessScore);
+        return SetScoreReasonSuccess(testData, relevancyScore, faithfulnessScore);
     }
 
-    public MetricScore SetScoreReasonSuccess(MetricEvaluationContext context, MetricScore relevancyMetric, MetricScore faithfulnessMetric)
+    public MetricScore SetScoreReasonSuccess(EvaluatorTestData testData, MetricScore relevancyMetric, MetricScore faithfulnessMetric)
     {
 
         var relevancyScore = relevancyMetric.Score;
@@ -67,14 +67,14 @@ public class FaithfulRelevancyMetric : Metric<FaithfulRelevancyConfiguration>
 
 ### Example 2: Non-LLM as a Judge Match Metric
 
-This metric uses `MatchMetric.Exact()` to check for word-for-word equality between the `actual_output` and `expected_output`.
+This metric uses `MatchMetric.Exact()` to check for word-for-word equality between the `ActualOutput` and `ExpectedOutput`.
 
 ```csharp
 public class ExactMatchMetric : Metric<MetricConfiguration>
 {
     public ExactMatchMetric(MetricConfiguration configuration) : base(configuration) { }
 
-    public override async Task<MetricScore> ScoreAsync(MetricEvaluationContext context)
+    public override async Task<MetricScore> ScoreAsync(EvaluatorTestData testData)
     {
         var match = MatchMetric.Exact();
         return await match.ScoreAsync(context);
@@ -84,10 +84,10 @@ public class ExactMatchMetric : Metric<MetricConfiguration>
 
 ## Configuration Options
 
-| Parameter     | Description                                                                                        |
-| ------------- | -------------------------------------------------------------------------------------------------- |
-| `threshold`   | The minimum score required to pass the test (e.g., 0.6).                                           |
-| `strict_mode` | If `true`, enforces binary scoring—1 for perfect match, 0 otherwise. Applies to composite metrics. |
+| Parameter    | Description                                                                                        |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| `Threshold`  | The minimum score required to pass the test (e.g., 0.6).                                           |
+| `StrictMode` | If `true`, enforces binary scoring—1 for perfect match, 0 otherwise. Applies to composite metrics. |
 
 ## Notes
 

@@ -16,34 +16,60 @@ The Contextual Precision Metric evaluates how well a Retrieval-Augmented Generat
 
 ## How to use
 
-The Contextual Precision Metric requires `input`, `actual_output`, `expected_output`, and `retrieval_context`. You can instantiate the metric with optional parameters to customize its behavior.
+The Contextual Precision Metric requires `InitialInput`, `ExpectedOutput`, and `RetrievalContext` to function. You can instantiate an Contextual Precision metric with optional parameters to customize its behavior.
 
-Instantiate a Contextual Precision Metric by using one of these static constructors:
+Add Contextual Precision Metric to your evaluator:
 
-| Constructor                    | Description                |
-| ------------------------------ | -------------------------- |
-| `ContextualPrecision.Metric()` | Initializes a new instance |
+| Method                                                                                               | Description                                                           |
+| ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `AddContextualPrecision(bool includeReason = true, bool strictMode = false, double threshold = 0.5)` | Creates the Contextual Precision metric and adds it to the evaluator. |
+| `AddContextualPrecision(ContextualPrecisionMetricConfiguration config)`                              | Creates the Contextual Precision metric and adds it to the evaluator. |
 
-Here's an example of how to use Contextual Precision:
-
-```csharp
-var metric = ContextualPrecision.Metric();
-var result = metric.Evaluate(modelOutput);
-```
-
-### Optional Parameters
-
-| Parameter        | Description                                                                                                         |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `threshold`      | A float representing the minimum passing threshold, defaulting to 0.5.                                              |
-| `include_reason` | A boolean that, when set to `True`, provides a reason for its evaluation score. Default is `True`.                  |
-| `strict_mode`    | Enforces a binary metric score—1 for perfect precision, 0 otherwise—setting the threshold to 1. Default is `False`. |
-
-## Samples
-
-We've given you a sample to work with that evaluates bla bla bla. Here's how you can run these samples:
+Here's an example of how to use Contextual Precision metric:
 
 ```csharp
-var metric = ContextualPrecision.Metric();
-var result = metric.Evaluate(modelOutput);
+// 1) Prepare your data
+var cases = new[]
+{
+    new TType
+    {
+        UserInput    = "I need help with my account; I mentioned earlier that my account number is 12345, but I cannot log in.",
+        LLMOutput   = "Please reset your password using the forgot password link.",
+        GroundTruth   = "Since you mentioned account number 12345 earlier and stated you're having trouble logging in, please try resetting your password using the 'Forgot Password' link. If the issue persists, let me escalate your ticket for further assistance.",
+        RetrievalContext = ["Previous conversation where the user mentioned account number 12345 and issues with logging in."]
+    }
+};
+
+// 2) Create evaluator, mapping your case → MetricEvaluationContext
+var evaluator = Evaluator.FromData(
+    ChatClient.GetInstance(),
+    cases,
+    c => new MetricEvaluationContext
+    {
+        InitialInput    = c.UserInput,
+        ExpectedOutput    = c.GroundTruth,
+        RetrievalContext = c.RetrievalContext,
+        ActualOutput    = ""
+    }
+);
+
+// 3) Add metric and run
+evaluator.AddContextualPrecision(includeReason: true);
+var result = await evaluator.RunAsync();
 ```
+
+### Required Data Fields
+
+| Parameter          | Description                                                                                                                                             |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `InitialInput`     | A string That represents the initial input is the user interaction with the LLM.                                                                        |
+| `ExpectedOutput`   | The expected output of the test case.                                                                                                                   |
+| `RetrievalContext` | A list of background information strings that your app actually found when answering. Use this to compare what was retrieved against the ideal Context. |
+
+### Optional Configuration Parameters
+
+| Parameter       | Description                                                                                                         |
+| --------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `Threshold`     | A float representing the minimum passing score, defaulting to 0.5.                                                  |
+| `IncludeReason` | A boolean that, when set to `True`, provides a reason for the metric score. Default is `True`.                      |
+| `StrictMode`    | Enforces a binary metric score—1 for perfect relevance, 0 otherwise—setting the threshold to 1. Default is `False`. |

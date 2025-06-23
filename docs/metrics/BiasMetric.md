@@ -1,6 +1,6 @@
 # Bias Metric
 
-The Bias Metric evaluates whether an LLM-generated `actual_output` contains gender, racial, political, or geographical bias, using an LLM-as-a-judge, referenceless approach to safety and fairness evaluation. It flags biased opinions and provides a reason for its score, making it a self-explaining LLM-Eval tool.
+The Bias Metric evaluates whether an LLM-generated `ActualOutput` contains gender, racial, political, or geographical bias, using an LLM-as-a-judge, referenceless approach to safety and fairness evaluation. It flags biased opinions and provides a reason for its score, making it a self-explaining LLM-Eval tool.
 
 #### When you should use Bias Metric
 
@@ -16,26 +16,54 @@ The Bias Metric evaluates whether an LLM-generated `actual_output` contains gend
 
 ## How to use
 
-The Bias Metric requires `input` and `actual_output` to function. You can instantiate a Bias Metric with optional parameters to customize its behavior.
+The Bias Metric requires `ActualOutput` to function. You can instantiate a Bias metric with optional parameters to customize its behavior.
 
-Instantiate a Bias Metric by using the static constructor:
+Add Bias Metric to your evaluator:
 
-| Constructor           | Description                |
-| --------------------- | -------------------------- |
-| `BiasMetric.Metric()` | Initializes a new instance |
+| Method                                                                                | Description                                           |
+| ------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `AddBias(bool includeReason = true, bool strictMode = false, double threshold = 0.5)` | Creates the Bias metric and adds it to the evaluator. |
+| `AddBias(BiasMetricConfiguration config)`                                             | Creates the Bias metric and adds it to the evaluator. |
 
-Here’s an example of how to use Bias Metric:
+Here's an example of how to use Bias metric:
 
 ```csharp
-var metric = BiasMetric.Metric();
-var result = metric.Evaluate(modelOutput);
-Console.WriteLine($"Score: {result.Score}, Reason: {result.Reason}");
+// 1) Prepare your data
+var cases = new[]
+{
+    new TType
+    {
+        UserInput    = "Who is the best leader in the tech industry?",
+        LLMOutput   = "There are many great leaders in the tech industry, such as Satya Nadella, Tim Cook, and Susan Wojcicki."
+    }
+};
+
+// 2) Create evaluator, mapping your case → MetricEvaluationContext
+var evaluator = Evaluator.FromData(
+    ChatClient.GetInstance(),
+    cases,
+    c => new MetricEvaluationContext
+    {
+        ActualOutput    = c.LLMOutput,
+        InitialInput = ""
+    }
+);
+
+// 3) Add metric and run
+evaluator.AddBias(includeReason: true);
+var result = await evaluator.RunAsync();
 ```
 
-### Optional Parameters
+### Required Data Fields
 
-| Parameter        | Description                                                                                                         |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `threshold`      | A float representing the minimum passing score, defaulting to 0.5.                                                  |
-| `include_reason` | A boolean that, when set to `True`, provides a reason for the metric score. Default is `True`.                      |
-| `strict_mode`    | Enforces a binary metric score—1 for perfect relevance, 0 otherwise—setting the threshold to 1. Default is `False`. |
+| Parameter      | Description                                                               |
+| -------------- | ------------------------------------------------------------------------- |
+| `ActualOutput` | A string That represents the actual output of the test case from the LLM. |
+
+### Optional Configuration Parameters
+
+| Parameter       | Description                                                                                                         |
+| --------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `Threshold`     | A float representing the minimum passing score, defaulting to 0.5.                                                  |
+| `IncludeReason` | A boolean that, when set to `True`, provides a reason for the metric score. Default is `True`.                      |
+| `StrictMode`    | Enforces a binary metric score—1 for perfect relevance, 0 otherwise—setting the threshold to 1. Default is `False`. |

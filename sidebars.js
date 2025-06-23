@@ -23,7 +23,6 @@ const sidebars = {
         'metrics/ContextualPrecisionMetric',
         'metrics/ContextualRecallMetric',
         'metrics/CustomMetric',
-        'metrics/DAGMetric',
         'metrics/FaithfulnessMetric',
         'metrics/GEvalMetric',
         'metrics/HallucinationMetric',

@@ -1,6 +1,6 @@
 # Faithfulness Metric
 
-The Faithfulness Metric assesses the quality of your Retrieval-Augmented Generation (RAG) pipeline's generator by evaluating whether the `actual_output` factually aligns with the contents of your `retrieval_context`. This metric focuses on identifying contradictions between the generated output and the provided context, ensuring that the information presented is accurate and trustworthy. Additionally, it offers explanations for its scores, making it a self-explaining LLM-Eval tool.
+The Faithfulness Metric assesses the quality of your Retrieval-Augmented Generation (RAG) pipeline's generator by evaluating whether the `ActualOutput` factually aligns with the contents of your `RetrievalContext`. This metric focuses on identifying contradictions between the generated output and the provided context, ensuring that the information presented is accurate and trustworthy. Additionally, it offers explanations for its scores, making it a self-explaining LLM-Eval tool.
 
 #### When you should use Faithfulness Metric
 
@@ -16,34 +16,63 @@ The Faithfulness Metric assesses the quality of your Retrieval-Augmented Generat
 
 ## How to use
 
-The Faithfulness Metric requires `input`, `actual_output`, and `retrieval_context` to function effectively. You can instantiate a Faithfulness Metric with optional parameters to customize its behavior.
+The Faithfulness Metric requires `ActualOutput` and `RetrievalContext` to function. You can instantiate an Faithfulness metric with optional parameters to customize its behavior.
 
-Instantiate a Faithfulness Metric by using one of these static constructors:
+Add Faithfulness Metric to your evaluator:
 
-| Constructor             | Description                |
-| ----------------------- | -------------------------- |
-| `Faithfulness.Metric()` | Initializes a new instance |
+| Method                                                                                                                           | Description                                                                                                                                                                            |
+| -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AddFaithfulness(int? truthsExtractionLimit = null, bool includeReason = true, bool strictMode = false, double threshold = 0.5)` | Creates the Faithfulness metric and adds it to the evaluator. You can optionally set the number of truths to extract from the actual output. Leaving this NULL will let the LLM decide |
+| `AddFaithfulness(FaithfulnessMetricConfiguration config)`                                                                        | Creates the Faithfulness metric and adds it to the evaluator.                                                                                                                          |
 
-Here's an example of how to use Faithfulness:
-
-```csharp
-var metric = Faithfulness.Metric();
-var result = metric.Evaluate(modelOutput);
-```
-
-### Optional Parameters
-
-| Parameter        | Description                                                                                                         |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `threshold`      | A float representing the minimum passing threshold, defaulting to 0.5.                                              |
-| `include_reason` | A boolean that, when set to `True`, provides a reason for its evaluation score. Default is `True`.                  |
-| `strict_mode`    | Enforces a binary metric score—1 for perfect precision, 0 otherwise—setting the threshold to 1. Default is `False`. |
-
-## Samples
-
-We've given you a sample to work with that evaluates bla bla bla. Here's how you can run these samples:
+Here's an example of how to use Faithfulness metric:
 
 ```csharp
-var metric = Faithfulness.Metric();
-var result = metric.Evaluate(modelOutput);
+// 1) Prepare your data
+var cases = new[]
+{
+    new TType
+    {
+        UserInput    = "I need help with my account; I mentioned earlier that my account number is 12345, but I cannot log in.",
+        LLMOutput   = "Your account number is 12345. Try resetting your password using the 'Forgot Password' link.",
+        GroundTruth = "Since you mentioned account number 12345 earlier and stated you're having trouble logging in, please try resetting your password using the 'Forgot Password' link. If the issue persists, let me escalate your ticket for further assistance.",
+        RetrievalContext =
+        [
+            "Previous conversation where the user mentioned account number 12345 and issues with logging in."
+        ]
+    }
+};
+
+// 2) Create evaluator, mapping your case → MetricEvaluationContext
+var evaluator = Evaluator.FromData(
+    ChatClient.GetInstance(),
+    cases,
+    c => new MetricEvaluationContext
+    {
+        ActualOutput    = c.LLMOutput,
+        RetrievalContext = c.RetrievalContext,
+        InitialInput    = "",
+    }
+);
+
+// 3) Add metric and run
+evaluator.AddFaithfulness(includeReason: true);
+var result = await evaluator.RunAsync();
 ```
+
+### Required Data Fields
+
+| Parameter          | Description                                                                                                                                             |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `InitialInput`     | A string That represents the initial input is the user interaction with the LLM.                                                                        |
+| `ActualOutput`     | A string That represents the actual output of the test case from the LLM.                                                                               |
+| `RetrievalContext` | A list of background information strings that your app actually found when answering. Use this to compare what was retrieved against the ideal Context. |
+
+### Optional Configuration Parameters
+
+| Parameter               | Description                                                                                                              |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `TruthsExtractionLimit` | An integer specifying the number of truths to extract from the actual output. Leaving this NULL will let the LLM decide. |
+| `Threshold`             | A float representing the minimum passing score, defaulting to 0.5.                                                       |
+| `IncludeReason`         | A boolean that, when set to `True`, provides a reason for the metric score. Default is `True`.                           |
+| `StrictMode`            | Enforces a binary metric score—1 for perfect relevance, 0 otherwise—setting the threshold to 1. Default is `False`.      |
