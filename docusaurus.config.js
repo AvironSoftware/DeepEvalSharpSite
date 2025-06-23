@@ -11,7 +11,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'DeepEvalSharp',
-  tagline: 'Evaluations are cool',
+  tagline: 'Test Your LLMs Like a Pro',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -25,6 +25,9 @@ const config = {
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/DeepEvalSharpSite/',
 
+  customFields: {
+    description: 'DeepEvalSharp is an LLM evaluation framework for .NET developers, providing reliable AI evaluation metrics without needing Python.',
+  },
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'AvironSoftware', // Usually your GitHub org/user name.
@@ -57,7 +60,6 @@ const config = {
   ],
 
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
         title: 'DeepEvalSharp',
@@ -85,6 +87,9 @@ const config = {
         darkTheme: prismThemes.dracula,
         additionalLanguages: ['csharp']
       },
+      metadata: [
+        {name: 'keywords', content: 'LLM Evaluation, .NET, DeepEvalSharp, LLM Testing, AI Evaluation, Python alternative, Custom Metric', }
+      ],
     }),
 };
 
