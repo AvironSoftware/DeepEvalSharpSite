@@ -26,6 +26,7 @@ const sidebars = {
         'metrics/FaithfulnessMetric',
         'metrics/GEvalMetric',
         'metrics/HallucinationMetric',
+        'metrics/MatchMetric',
         'metrics/PromptAlignmentMetric',
         'metrics/SummarizationMetric',
         'metrics/TaskCompletionMetric',

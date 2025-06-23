@@ -38,11 +38,11 @@ var cases = new[]
     }
 };
 
-// 2) Create evaluator, mapping your case → MetricEvaluationContext
+// 2) Create evaluator, mapping your case → EvaluatorTestData
 var evaluator = Evaluator.FromData(
     ChatClient.GetInstance(),
     cases,
-    c => new MetricEvaluationContext
+    c => new EvaluatorTestData
     {
         ActualOutput    = c.LLMOutput,
         InitialInput = ""
