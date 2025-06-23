@@ -50,8 +50,7 @@ var evaluator = Evaluator.FromData(
     c => new EvaluatorTestData
     {
         ActualOutput    = c.LLMOutput,
-        RetrievalContext = c.RetrievalContext,
-        InitialInput    = "",
+        RetrievalContext = c.RetrievalContext
     }
 );
 
@@ -64,7 +63,6 @@ var result = await evaluator.RunAsync();
 
 | Parameter          | Description                                                                                                                                             |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `InitialInput`     | A string That represents the initial input is the user interaction with the LLM.                                                                        |
 | `ActualOutput`     | A string That represents the actual output of the test case from the LLM.                                                                               |
 | `RetrievalContext` | A list of background information strings that your app actually found when answering. Use this to compare what was retrieved against the ideal Context. |
 

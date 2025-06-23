@@ -48,8 +48,7 @@ var evaluator = Evaluator.FromData(
     {
         InitialInput    = c.UserInput,
         ExpectedOutput    = c.GroundTruth,
-        RetrievalContext = c.RetrievalContext,
-        ActualOutput    = ""
+        RetrievalContext = c.RetrievalContext
     }
 );
 

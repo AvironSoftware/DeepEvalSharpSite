@@ -46,8 +46,7 @@ var evaluator = Evaluator.FromData(
     c => new EvaluatorTestData
     {
         ActualOutput    = c.LLMOutput,
-        Context =       = c.Context,
-        InitialInput    = "",
+        Context         = c.Context
     }
 );
 

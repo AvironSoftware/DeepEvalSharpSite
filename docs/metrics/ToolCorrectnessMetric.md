@@ -62,8 +62,6 @@ var evaluator = Evaluator.FromData(
     cases,
     c => new EvaluatorTestData
     {
-        InitialInput    = c.UserInput,
-        ActualOutput    = c.LLMOutput,
         ToolsCalled     = c.ToolsCalled,
         ExpectedTools   = c.ExpectedTools
     }
@@ -78,8 +76,6 @@ var result = await evaluator.RunAsync();
 
 | Parameter       | Description                                                                                                                        |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `InitialInput`  | A string That represents the initial input is the user interaction with the LLM.                                                   |
-| `ActualOutput`  | A string That represents the actual output of the test case from the LLM.                                                          |
 | `ToolsCalled`   | A list of `DeepEvalSharp.Models.ToolCall`'s which are tools your LLM actually invoked during execution.                            |
 | `ExpectedTools` | A list of `DeepEvalSharp.Models.ToolCall`'s which are tools your LLM expected tools your LLM should have invoked during execution. |
 

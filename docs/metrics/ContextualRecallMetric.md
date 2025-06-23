@@ -50,8 +50,6 @@ var evaluator = Evaluator.FromData(
     cases,
     c => new EvaluatorTestData
     {
-        InitialInput    = "",
-        ActualOutput    = "",
         ExpectedOutput = c.GroundTruth,
         RetrievalContext = c.RetrievalContext
     }
