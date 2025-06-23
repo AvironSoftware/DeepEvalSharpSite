@@ -1,132 +1,159 @@
 # Test Cases
 
-## Loading Data into Evaluator
+## Quick Summary
 
-DeepEvalSharp’s `Evaluator` class provides several static methods to load datasets in various formats and wire them up to your evaluation pipeline. Below is a guide to each loader and how to define the mapping to `EvaluatorTestData`.
+`EvaluatorTestData` is the core data structure in DeepEvalSharp to define individual evaluation items in .NET. All fields are optional—you only include what your metrics need.
+
+An `EvaluatorTestData` has **seven** parameters:
+
+- `InitialInput`
+- `ExpectedOutput`
+- `ActualOutput`
+- `Context`
+- `RetrievalContext`
+- `ToolsCalled`
+- `ExpectedTools`
+
+## Parameters
+
+### InitialInput
+
+The text prompt or user input sent to the LLM.
+
+- **Type:** `string?`
+- **Usage:** Required by metrics that evaluate input formatting or conversational flow.
+
+```csharp
+var data = new EvaluatorTestData {
+    InitialInput = "What is the capital of France?"
+};
+```
 
 ---
 
-## 1. FromData (In-Memory Collection)
+### ExpectedOutput
 
-Use when you already have a collection of `EvaluatorTestData` or another type that can be mapped directly.
+The ideal response you want the LLM to produce.
+
+- **Type:** `string?`
+- **Usage:** Used by output-comparison metrics (e.g., equality, similarity).
 
 ```csharp
-// For EvaluatorTestData collection (no mapping needed)
-var evaluator = Evaluator.FromData(chatClient, myTestDataList);
+var data = new EvaluatorTestData {
+    ExpectedOutput = "Paris"
+};
+```
 
-// For custom DTOs, map to EvaluatorTestData
-var evaluator2 = Evaluator.FromData<MyDTO>(
-    chatClient,
-    DTOList,
-    // Map each DTO to EvaluatorTestData
-    DTO => new EvaluatorTestData {
-        InitialInput    = DTO.Prompt,
-        ExpectedOutput  = DTO.Expected,
-        Context          = DTO.GoldContext,
-        RetrievalContext = DTO.RetrievedDocs
+---
+
+### ActualOutput
+
+The actual text returned by the LLM during evaluation.
+
+- **Type:** `string?`
+- **Usage:** Compare against `ExpectedOutput` or inspect generation quality.
+
+```csharp
+var data = new EvaluatorTestData {
+    ActualOutput = llm.Generate(prompt)
+};
+```
+
+---
+
+### Context
+
+Curated, correct background facts you want the LLM to reference (gold standard).
+
+- **Type:** `List<string>?`
+- **Usage:** RAG and grounding metrics compare generated text against this reference.
+
+```csharp
+var data = new EvaluatorTestData {
+    Context = new List<string> { "Paris is the capital of France." }
+};
+```
+
+---
+
+### RetrievalContext
+
+The data your application actually fetched at runtime (e.g., from a search or vector database).
+
+- **Type:** `List<string>?`
+- **Usage:** Evaluate retriever performance by comparing `RetrievalContext` against `Context`.
+
+```csharp
+var data = new EvaluatorTestData {
+    RetrievalContext = new List<string> { "Capital cities: Paris, Berlin, Madrid" }
+};
+```
+
+---
+
+### ToolsCalled
+
+Tools the LLM invoked during execution.
+
+- **Type:** `List<ToolCall>?`
+- **Usage:** Agentic metrics verify which tools were used (e.g., API calls, calculators).
+
+```csharp
+var data = new EvaluatorTestData {
+    ToolsCalled = new List<ToolCall> {
+        new ToolCall { Name = "WebSearch" }
     }
-);
+};
 ```
 
 ---
 
-## 2. FromJson (Single JSON String)
+### ExpectedTools
 
-Deserialize a JSON array of objects into your type, then map.
+The tools you intended the LLM to call for optimal performance.
+
+- **Type:** `List<ToolCall>?`
+- **Usage:** Compare against `ToolsCalled` in tool-correctness metrics.
 
 ```csharp
-string json = File.ReadAllText("test-cases.json");
-var evaluator = Evaluator.FromJson<MyRecord>(
-    chatClient,
-    json,
-    record => new EvaluatorTestData {
-        InitialInput    = record.Question,
-        ExpectedOutput  = record.Answer,
-        Context          = record.ReferenceSnippets
+var data = new EvaluatorTestData {
+    ExpectedTools = new List<ToolCall> {
+        new ToolCall { Name = "WebSearch" }
     }
-);
+};
 ```
-
-- **jsonOptions** (optional): pass `JsonSerializerOptions` for casing or custom converters.
 
 ---
 
-## 3. FromJsonLines (NDJSON / JSON Lines)
+## Context vs RetrievalContext
 
-Load newline-delimited JSON (one object per line).
+- **Context** is the textbook: the perfect facts you provide.
+- **RetrievalContext** is the student’s notes: the real data fetched at runtime.
+
+This distinction helps you pinpoint whether errors arise from retrieval or generation.
+
+---
+
+## Usage Example
 
 ```csharp
-IEnumerable<string> lines = File.ReadLines("ndjson.txt");
-var evaluator = Evaluator.FromJsonLines<MyRecord>(
-    chatClient,
-    lines,
-    record => new EvaluatorTestData {
-        InitialInput    = record.Input,
-        ExpectedOutput  = record.Output
-    }
-);
+using DeepEvalSharp.Scoring;
+
+// Define test data with only needed fields
+var testData = new EvaluatorTestData
+{
+    InitialInput    = "What’s the tallest mountain?",
+    ExpectedOutput  = "Mount Everest",
+    Context          = new List<string> { "Mount Everest is 29,032 ft." },
+    RetrievalContext = new List<string> { "Mount Everest 29032 ft" }
+};
+
+// Run evaluation
+var config = new ContextualPrecisionMetricConfiguration
+{
+    IncludeReason = true
+};
+var contextualPrecMetric = new ContextualPrecisionMetric(ChatClient.GetInstance(), config);
+var score = await contextualPrecMetric.ScoreAsync(context);
+Console.WriteLine($"Score: {result.Score}, Passed: {result.Result}");
 ```
-
----
-
-## 4. FromJsonFile (JSON File)
-
-Shortcut to read and parse a JSON file in one call.
-
-```csharp
-var evaluator = Evaluator.FromJsonFile<MyRecord>(
-    chatClient,
-    filePath: "data/test-cases.json",
-    map: record => new EvaluatorTestData {
-        InitialInput   = record.Query,
-        ExpectedOutput = record.Result
-    }
-);
-```
-
----
-
-## 5. FromCsv (CSV String)
-
-Parse CSV text into your DTO, then map.
-
-```csharp
-string csv = File.ReadAllText("cases.csv");
-var evaluator = Evaluator.FromCsv<MyCsvModel>(
-    chatClient,
-    csv,
-    csvModel => new EvaluatorTestData {
-        InitialInput   = csvModel.Prompt,
-        ExpectedOutput = csvModel.Expected
-    },
-    config: new CsvHelper.Configuration.CsvConfiguration(CultureInfo.InvariantCulture)
-);
-```
-
----
-
-## 6. FromCsvFile (CSV File)
-
-Load and parse a CSV file directly.
-
-```csharp
-var evaluator = Evaluator.FromCsvFile<MyCsvModel>(
-    chatClient,
-    filePath: "cases.csv",
-    map: csvModel => new EvaluatorTestData {
-        InitialInput   = csvModel.Question,
-        ExpectedOutput = csvModel.Answer,
-        Context         = csvModel.GoldContext.Split("|").ToList()
-    }
-);
-```
-
----
-
-## Mapping Tips
-
-- **Type parameter `T`** can be `EvaluatorTestData` itself, in which case your map expression can be `c => c`.
-- Use C# 9 **record types** or **DTO classes** with properties matching your file schema.
-- If your data type already _is_ `EvaluatorTestData`, prefer `FromData(chatClient, data)` to skip mapping.
-
-With these loaders, you can seamlessly plug in any data source—JSON, CSV, or in-memory collections—into DeepEvalSharp’s evaluation engine.
