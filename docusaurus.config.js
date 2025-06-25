@@ -10,7 +10,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'DeepEvalSharp',
+  title: 'EvalSharp',
   tagline: 'Test Your LLMs Like a Pro',
   favicon: 'img/favicon.ico',
 
@@ -23,15 +23,15 @@ const config = {
   url: 'https://avironsoftware.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/DeepEvalSharpSite/',
+  baseUrl: '/EvalSharpSite/',
 
   customFields: {
-    description: 'DeepEvalSharp is an LLM evaluation framework for .NET developers, providing reliable AI evaluation metrics without needing Python.',
+    description: 'EvalSharp is an LLM evaluation framework for .NET developers, providing reliable AI evaluation metrics without needing Python.',
   },
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'AvironSoftware', // Usually your GitHub org/user name.
-  projectName: 'DeepEvalSharpSite', // Usually your repo name.
+  projectName: 'EvalSharpSite', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -62,7 +62,7 @@ const config = {
   themeConfig:
     ({
       navbar: {
-        title: 'DeepEvalSharp',
+        title: 'EvalSharp',
         items: [
           {
             type: 'docSidebar',
@@ -72,7 +72,7 @@ const config = {
 
           },
           {
-            href: 'https://github.com/AvironSoftware/DeepEvalSharp',
+            href: 'https://github.com/AvironSoftware/EvalSharp',
             label: 'GitHub',
             position: 'right',
           },
@@ -88,8 +88,8 @@ const config = {
         additionalLanguages: ['csharp']
       },
       metadata: [
-        {name: 'keywords', content: 'LLM Evaluation, .NET, DeepEvalSharp, LLM Testing, AI Evaluation, Python alternative, Custom Metric' },
-        {name: 'description', content: 'DeepEvalSharp is an LLM evaluation framework for .NET developers, providing reliable AI evaluation metrics without needing Python.'}
+        {name: 'keywords', content: 'LLM Evaluation, .NET, EvalSharp, LLM Testing, AI Evaluation, Python alternative, Custom Metric' },
+        {name: 'description', content: 'EvalSharp is an LLM evaluation framework for .NET developers, providing reliable AI evaluation metrics without needing Python.'}
       ],
     }),
 };

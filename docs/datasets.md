@@ -2,7 +2,7 @@
 
 ## Loading Data into Evaluator
 
-DeepEvalSharp’s `Evaluator` class provides several static methods to load datasets in various formats and wire them up to your evaluation pipeline. Below is a guide to each loader and how to define the mapping to `EvaluatorTestData`.
+EvalSharp’s `Evaluator` class provides several static methods to load datasets in various formats and wire them up to your evaluation pipeline. Below is a guide to each loader and how to define the mapping to `EvaluatorTestData`.
 
 ---
 
@@ -129,4 +129,4 @@ var evaluator = Evaluator.FromCsvFile<MyCsvModel>(
 - Use C# 9 **record types** or **DTO classes** with properties matching your file schema.
 - If your data type already _is_ `EvaluatorTestData`, prefer `FromData(chatClient, data)` to skip mapping.
 
-With these loaders, you can seamlessly plug in any data source—JSON, CSV, or in-memory collections—into DeepEvalSharp’s evaluation engine.
+With these loaders, you can seamlessly plug in any data source—JSON, CSV, or in-memory collections—into EvalSharp’s evaluation engine.

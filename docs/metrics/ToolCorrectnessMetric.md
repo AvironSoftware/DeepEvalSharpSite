@@ -76,8 +76,8 @@ var result = await evaluator.RunAsync();
 
 | Parameter       | Description                                                                                                                        |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `ToolsCalled`   | A list of `DeepEvalSharp.Models.ToolCall`'s which are tools your LLM actually invoked during execution.                            |
-| `ExpectedTools` | A list of `DeepEvalSharp.Models.ToolCall`'s which are tools your LLM expected tools your LLM should have invoked during execution. |
+| `ToolsCalled`   | A list of `EvalSharp.Models.ToolCall`'s which are tools your LLM actually invoked during execution.                            |
+| `ExpectedTools` | A list of `EvalSharp.Models.ToolCall`'s which are tools your LLM expected tools your LLM should have invoked during execution. |
 
 ### Optional Configuration Parameters
 

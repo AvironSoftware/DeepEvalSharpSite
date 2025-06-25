@@ -2,7 +2,7 @@
 
 ## Quick Summary
 
-`EvaluatorTestData` is the core data structure in DeepEvalSharp to define individual evaluation items in .NET. All fields are optional—you only include what your metrics need.
+`EvaluatorTestData` is the core data structure in EvalSharp to define individual evaluation items in .NET. All fields are optional—you only include what your metrics need.
 
 An `EvaluatorTestData` has **seven** parameters:
 
@@ -137,7 +137,7 @@ This distinction helps you pinpoint whether errors arise from retrieval or gener
 ## Usage Example
 
 ```csharp
-using DeepEvalSharp.Scoring;
+using EvalSharp.Scoring;
 
 // Define test data with only needed fields
 var testData = new EvaluatorTestData

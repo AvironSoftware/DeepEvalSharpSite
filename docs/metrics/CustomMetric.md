@@ -1,6 +1,6 @@
 # Custom Metric
 
-The Custom Metric feature allows you to define your own evaluation logic, either by composing existing DeepEvalSharp metrics or by creating new rules tailored to your application. These user-defined metrics enable bespoke model validation for use cases not covered by out-of-the-box tools.
+The Custom Metric feature allows you to define your own evaluation logic, either by composing existing EvalSharp metrics or by creating new rules tailored to your application. These user-defined metrics enable bespoke model validation for use cases not covered by out-of-the-box tools.
 
 #### When you should use Custom Metrics
 
@@ -15,7 +15,7 @@ The Custom Metric feature allows you to define your own evaluation logic, either
 
 ## How to use
 
-Custom metrics follow the standard metric interface and derive from the base `DeepEvalSharp.Scoring.Metric<TConfiguration>` class. You can implement your scoring logic using existing DeepEvalSharp metrics or your own custom routines.
+Custom metrics follow the standard metric interface and derive from the base `EvalSharp.Scoring.Metric<TConfiguration>` class. You can implement your scoring logic using existing EvalSharp metrics or your own custom routines.
 
 Implementing MetricConfiguration is optional, but if you would like visibility to additional parameters, this is suggested.
 
@@ -92,4 +92,4 @@ public class ExactMatchMetric : Metric<MetricConfiguration>
 ## Notes
 
 - You can extend the `MetricConfiguration` base class to pass additional flags or control scoring behavior.
-- You can mix and match any existing DeepEvalSharp metrics within a custom metric.
+- You can mix and match any existing EvalSharp metrics within a custom metric.

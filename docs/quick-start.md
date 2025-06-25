@@ -1,6 +1,6 @@
 # Quick Start
 
-Follow these steps to get up and running with DeepEvalSharp in minutes.
+Follow these steps to get up and running with EvalSharp in minutes.
 
 ## Prerequisites
 
@@ -11,15 +11,15 @@ Follow these steps to get up and running with DeepEvalSharp in minutes.
 ## 1. Create a .NET Project
 
 ```bash
-mkdir DeepEvalSample
-cd DeepEvalSample
+mkdir EvalSample
+cd EvalSample
 dotnet new console
 ```
 
-## 2. Install DeepEvalSharp
+## 2. Install EvalSharp
 
 ```bash
-dotnet add package DeepEvalSharp
+dotnet add package EvalSharp
 ```
 
 ## 3. Prepare Your Data
@@ -100,10 +100,10 @@ public class SummaryInputOutput
 Open `Program.cs` (or your main application file) and replace its contents with:
 
 ```csharp
-using DeepEvalSharp;
-using DeepEvalSharp.Scoring;
+using EvalSharp;
+using EvalSharp.Scoring;
 
-namespace DeepEvalSample
+namespace EvalSample
 {
     class Program
     {
@@ -138,8 +138,8 @@ dotnet run
 You should see an output similar to:
 
 ```
-You're running DeepEvalSharps's GEval Metric!(using gpt-4.1-mini, strict = False, async_mode = True)...
-You're running DeepEvalSharps's AnswerRelevancy Metric!(using gpt-4.1-mini, strict = False, async_mode = True)...
+You're running EvalSharps's GEval Metric!(using gpt-4.1-mini, strict = False, async_mode = True)...
+You're running EvalSharps's AnswerRelevancy Metric!(using gpt-4.1-mini, strict = False, async_mode = True)...
 Evaluating 10 test case(s) in parallel:
                                                      Test Results
                                         ┌───────────┬─────────────────┬───────┐

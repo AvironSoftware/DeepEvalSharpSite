@@ -1,12 +1,12 @@
-# DeepEvalSharp
+# EvalSharp
 
-**DeepEvalSharp** is a powerful and extensible suite of **LLM evaluation metrics built for the .NET ecosystem**. Whether you're evaluating an intelligent chatbot, summarization tool, or agent-based workflow, DeepEvalSharp gives you the tools to measure LLM performance with precision and transparency.
+**EvalSharp** is a powerful and extensible suite of **LLM evaluation metrics built for the .NET ecosystem**. Whether you're evaluating an intelligent chatbot, summarization tool, or agent-based workflow, EvalSharp gives you the tools to measure LLM performance with precision and transparency.
 
-DeepEvalSharp is inspired by [DeepEval](https://deepeval.com) and brings the same high-level evaluation primitives to .NET developers.
+EvalSharp is inspired by [DeepEval](https://deepeval.com) and brings the same high-level evaluation primitives to .NET developers.
 
-## Why DeepEvalSharp?
+## Why EvalSharp?
 
-Modern LLM applications require **reliable, explainable, and repeatable** evaluation. DeepEvalSharp helps you:
+Modern LLM applications require **reliable, explainable, and repeatable** evaluation. EvalSharp helps you:
 
 - Validate model output with task-based, context-aware metrics
 - Run automated tests in your CI pipeline
@@ -32,5 +32,5 @@ To get started, see the [Quickstart Guide](docs/quick-start.md).
 Install the core package via NuGet:
 
 ```bash
-dotnet add package DeepEvalSharp
+dotnet add package EvalSharp
 ```

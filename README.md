@@ -1,8 +1,8 @@
-# DeepEvalSharpSite Documentation
+# EvalSharpSite Documentation
 
-This repository hosts the DeepEvalSharpSite documentation website, built with [Docusaurus](https://docusaurus.io/) and published via GitHub Pages.
+This repository hosts the EvalSharpSite documentation website, built with [Docusaurus](https://docusaurus.io/) and published via GitHub Pages.
 
-🔗 **Live site:** https://avironsoftware.github.io/DeepEvalSharpSite/
+🔗 **Live site:** https://avironsoftware.github.io/EvalSharpSite/
 
 ---
 
@@ -12,6 +12,14 @@ This repository hosts the DeepEvalSharpSite documentation website, built with [D
 - npm (bundled with Node.js) or [Yarn](https://yarnpkg.com/)
 
 ---
+
+## Install Dependencies
+
+Install Docusaurus and other dependencies:
+
+```bash
+npm install
+```
 
 ## Build Locally
 
@@ -41,7 +49,7 @@ What happens under the hood:
 
 ## Adding New Metric Documentation
 
-To document an additional LLM metric, create a Markdown file in the **root** [`docs/` folder](https://github.com/AvironSoftware/DeepEvalSharpSite/tree/main/docs):
+To document an additional LLM metric, create a Markdown file in the **root** [`docs/` folder](https://github.com/AvironSoftware/EvalSharpSite/tree/main/docs):
 
 1. Add `docs/YourMetric.md`
 2. Include front-matter at the top:

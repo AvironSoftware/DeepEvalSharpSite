@@ -70,7 +70,7 @@ var result = await evaluator.RunAsync();
 | -------------- | ------------------------------------------------------------------------------------------------------- |
 | `InitialInput` | A string That represents the initial input is the user interaction with the LLM.                        |
 | `ActualOutput` | A string That represents the actual output of the test case from the LLM.                               |
-| `ToolsCalled`  | A list of `DeepEvalSharp.Models.ToolCall`'s which are tools your LLM actually invoked during execution. |
+| `ToolsCalled`  | A list of `EvalSharp.Models.ToolCall`'s which are tools your LLM actually invoked during execution. |
 
 ### Optional Configuration Parameters
 

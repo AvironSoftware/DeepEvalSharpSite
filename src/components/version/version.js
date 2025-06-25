@@ -9,7 +9,7 @@ export default function Version() {
                     <ShieldIcon className={styles.icon} />
                     MIT License
                   </a>
-                  <a href="https://github.com/AvironSoftware/DeepEvalSharp">
+                  <a href="https://github.com/AvironSoftware/EvalSharp">
                     <FlagIcon className={styles.icon} />
                     v0.1.2-alpha
                   </a>

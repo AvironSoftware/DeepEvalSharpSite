@@ -6,7 +6,7 @@ export default function Terminal() {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    const command = 'dotnet add package DeepEvalSharp';
+    const command = 'dotnet add package EvalSharp';
     navigator.clipboard.writeText(command).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
@@ -32,7 +32,7 @@ export default function Terminal() {
             <div className={styles.terminalbody}>
               <div className={styles.promptline}>
                 <span className={styles.promptsymbol}>$</span>
-                <code>dotnet add package DeepEvalSharp</code>
+                <code>dotnet add package EvalSharp</code>
               </div>
             </div>
             <div className={styles.terminaloverlay}>

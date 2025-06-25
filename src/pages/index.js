@@ -22,7 +22,7 @@ export default function Home() {
             <section className={styles.hero}>
               <h1 className={styles.title}>Test Your LLMs Like a Pro</h1>
               <p className={styles.subtitle}>
-                DeepEvalSharp brings powerful and developer-friendly tools for evaluating
+                EvalSharp brings powerful and developer-friendly tools for evaluating
                 large language models directly inside your .NET projects.
               </p>
               <div className={styles.buttons}>
@@ -50,7 +50,7 @@ export default function Home() {
               <div className={styles.featureTitle}>      
                 <CodeIcon aria-hidden="true" className={`${styles.svgIcon} ${styles.purpleIcon}`} />
                 <h4>Native .NET Evaluator</h4></div>
-              <p>DeepEvalSharp brings LLM metrics directly to .NET. Write eval tests in C# with a familiar API.</p>
+              <p>EvalSharp brings LLM metrics directly to .NET. Write eval tests in C# with a familiar API.</p>
             </div>
             <div className={styles.feature}>
               <div className={styles.featureTitle}>
