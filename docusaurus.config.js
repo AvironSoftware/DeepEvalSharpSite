@@ -23,7 +23,7 @@ const config = {
   url: 'https://avironsoftware.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/EvalSharpSite/',
+  baseUrl: '/',
 
   customFields: {
     description: 'EvalSharp is an LLM evaluation framework for .NET developers, providing reliable AI evaluation metrics without needing Python.',

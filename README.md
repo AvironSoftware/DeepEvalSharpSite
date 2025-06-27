@@ -2,7 +2,7 @@
 
 This repository hosts the EvalSharpSite documentation website, built with [Docusaurus](https://docusaurus.io/) and published via GitHub Pages.
 
-🔗 **Live site:** https://avironsoftware.github.io/EvalSharpSite/
+🔗 **Live site:** https://avironsoftware.github.io/
 
 ---
 
